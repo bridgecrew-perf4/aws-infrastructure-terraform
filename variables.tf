@@ -1,3 +1,6 @@
+####################
+#       AWS        #
+####################
 variable "region" {
   type    = string
   default = "us-east-1"
@@ -13,6 +16,7 @@ variable "aws_secret_key" {
   default = ""
 }
 
+# Environment #
 variable "var_name" {
   type    = string
   default = "blizzard"
@@ -23,6 +27,9 @@ variable "var_dev_environment" {
   default = "stage"
 }
 
+####################
+#     Networks     #
+####################
 variable "vpc_cidr" {
   default = "200.1.0.0/16"
 }
@@ -49,6 +56,14 @@ variable "availability_zones" {
   description = "List of Availability Zones (e.g. `['us-east-1a', 'us-east-1b', 'us-east-1c']`)"
 }
 
+####################
+#   EC2 Instance   #
+####################
+variable "i_tags" {
+  type    = list(string)
+  default = ["all", "transcoder"]
+}
+
 variable "i_type_octopus" {
   default = "t2.micro"
 }
@@ -57,17 +72,52 @@ variable "i_type_transcoder" {
   default = "t3.micro"
 }
 
-# variable "i_type" {
-#   #type    = map(any)
-#   default = {
-#     i_type_all        = "t2.micro"
-#     i_type_transcoder = "t3.micro"
-#   }
-# }
+####################
+# Ansible Playbook #
+####################
+variable "ansible_playbook" {
+  type    = list(string)
+  default = ["./octopus_setup_all.yml", "./octopus_setup_transcoder.yml"]
+}
 
-#################
-# RDS variables #
-#################
+variable "analytics" {
+  default     = "true"
+  description = "If set to true, install octopus-analytics service"
+}
+
+variable "chat" {
+  default     = "true"
+  description = "If set to true, install octopus-chat service"
+}
+
+variable "comments" {
+  default     = "true"
+  description = "If set to true, install octopus-comments service"
+}
+
+variable "ecommerce" {
+  default     = "true"
+  description = "If set to true, install octopus-ecommerce service"
+}
+
+variable "ums" {
+  default     = "true"
+  description = "If set to true, install UMS service"
+}
+
+variable "signaling" {
+  default     = "true"
+  description = "If set to true, install signaling service"
+}
+
+variable "webpay" {
+  default     = "true"
+  description = "If set to true, install webpay service"
+}
+
+####################
+#       RDS        #
+####################
 variable "db_type" {
   type    = string
   default = "db.t2.micro"
@@ -83,42 +133,9 @@ variable "password_db" {
   default = "test123456!"
 }
 
-variable "analytics" {
-  default     = "true"
-  description = "If set to true, install analytics on EC2"
-}
-
-variable "chat" {
-  default     = "true"
-  description = "If set to true, install chat on EC2"
-}
-
-variable "comments" {
-  default     = "true"
-  description = "If set to true, install comments on EC2"
-}
-
-variable "ecommerce" {
-  default     = "true"
-  description = "If set to true, install ecommerce on EC2"
-}
-
-variable "ums" {
-  default     = "true"
-  description = "If set to true, create ums EC2 instance"
-}
-
-# variable "signaling" {
-#   default = "true"
-#   description = "If set to true, install chat on EC2"
-# }
-
-# variable "webpay" {
-#   default = "true"
-#   description = "If set to true, install webpay on EC2"
-# }
-
-# S3 Buckets #
+####################
+#    S3 Buckets    #
+####################
 variable "s3bucket_name" {
   type        = list(string)
   default     = ["octopus-server", "private-octopus-server-s3", "chat-server-user-attachments", "chat-server-canned-attachments", "ecommerce-s3", "private-ecommerce-s3"]

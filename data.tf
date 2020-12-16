@@ -4,10 +4,9 @@
 # data "aws_availability_zones" "available_az" {
 #   state = "available"
 # }
-
-#########################
-# Get AWS ami image id #
-#########################
+##############################
+#    Get AWS ami image id    #
+##############################
 data "aws_ami" "amazon_linux" {
   owners      = ["amazon"]
   most_recent = true

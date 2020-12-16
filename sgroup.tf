@@ -98,19 +98,28 @@ resource "aws_security_group" "db_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 5432
-    to_port     = 5432
-    protocol    = "TCP"
-    cidr_blocks = ["200.1.0.0/16", "217.24.19.64/29", "82.117.216.88/30"]
+  dynamic "ingress" {
+    for_each = local.ingress_rules_db
+    content {
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
+      protocol    = "TCP"
+      cidr_blocks = ingress.value.cidr_blocks
+    }
   }
+  # ingress {
+  #   from_port   = 5432
+  #   to_port     = 5432
+  #   protocol    = "TCP"
+  #   cidr_blocks = ["200.1.0.0/16", "217.24.19.64/29", "82.117.216.88/30"]
+  # }
 
-  ingress {
-    from_port   = 10050
-    to_port     = 10050
-    protocol    = "TCP"
-    cidr_blocks = ["217.24.19.64/29", "82.117.216.88/30", "34.254.36.247/32", "50.16.146.15/32"]
-  }
+  # ingress {
+  #   from_port   = 10050
+  #   to_port     = 10050
+  #   protocol    = "TCP"
+  #   cidr_blocks = ["217.24.19.64/29", "82.117.216.88/30", "34.254.36.247/32", "50.16.146.15/32"]
+  # }
 
   tags = {
     Name               = "${var.var_name}-db-sg"
