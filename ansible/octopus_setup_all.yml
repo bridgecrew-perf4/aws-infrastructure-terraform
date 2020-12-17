@@ -1,4 +1,4 @@
-- name: Setup Octopus Single Server environment
+- name: Setup Octopus Server Environment
   hosts: all
   become: yes
   become_method: sudo
@@ -6,8 +6,10 @@
   remote_user: ec2-user
   gather_facts: yes
   vars:
-    dev_environment: "{{ lookup('env','var_dev_environment') }}"
-    var_name: "{{ lookup('env','var_name') }}"
+    #dev_environment: "{{ lookup('env','var_dev_environment') }}"
+    #var_name: "{{ lookup('env','var_name') }}"
+    var_name: blizzard
+    dev_environment: stage
     chat: "{{ lookup('env','var_chat') }}"
     signaling: "{{ lookup('env','var_signaling') }}"
     analytics: "{{ lookup('env','var_analytics') }}"

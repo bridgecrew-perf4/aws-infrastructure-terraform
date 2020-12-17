@@ -1,7 +1,7 @@
 locals {
   public_count = var.enabled && var.type == "public" ? length(var.availability_zones) : 0
-  bucket_count = length(var.s3bucket_name)
-  policy_file  = templatefile("policy.json", { name = var.var_name, dev_environment = var.var_dev_environment })
+  policy_file  = templatefile("policy/policy.json", { name = var.var_name, dev_environment = var.var_dev_environment })
+  i_type = [var.i_type_octopus, var.i_type_transcoder]
 
   ingress_rules_main = [{
     port        = 22
@@ -37,5 +37,5 @@ locals {
       cidr_blocks = ["217.24.19.64/29", "82.117.216.88/30", "34.254.36.247/32", "50.16.146.15/32"]
   }]
 
-  i_type = [var.i_type_octopus, var.i_type_transcoder]
+
 }

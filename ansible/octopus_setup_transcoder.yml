@@ -6,8 +6,10 @@
   remote_user: ec2-user
   gather_facts: yes
   vars:
-    dev_environment: "{{ lookup('env','var_dev_environment') }}"
-    var_name: "{{ lookup('env','var_name') }}"
+    #dev_environment: "{{ lookup('env','var_dev_environment') }}"
+    #var_name: "{{ lookup('env','var_name') }}"
+    var_name: blizzard
+    dev_environment: stage
   roles:
     - common
     - transcoder-server

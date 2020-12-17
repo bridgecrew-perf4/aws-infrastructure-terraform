@@ -15,8 +15,9 @@ variable "aws_secret_key" {
   type    = string
   default = ""
 }
-
-# Environment #
+###################
+#   Environment   #
+###################
 variable "var_name" {
   type    = string
   default = "blizzard"
@@ -77,7 +78,7 @@ variable "i_type_transcoder" {
 ####################
 variable "ansible_playbook" {
   type    = list(string)
-  default = ["./octopus_setup_all.yml", "./octopus_setup_transcoder.yml"]
+  default = ["./ansible/octopus_setup_all.yml", "./ansible/octopus_setup_transcoder.yml"]
 }
 
 variable "analytics" {

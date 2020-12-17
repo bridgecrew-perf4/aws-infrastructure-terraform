@@ -1,6 +1,6 @@
-######################################
-# Define RDS Postgresql Subnet Group #
-######################################
+##########################################
+#   Define RDS Postgresql Subnet Group   #
+##########################################
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.var_name}-subnet-db-public"
   subnet_ids = aws_subnet.public_subnets.*.id
@@ -48,9 +48,9 @@ resource "aws_db_instance" "octopus_rds_instance" {
   }
 }
 
-#############################################
-# Create missing databases on RDS instances #
-#############################################
+##########################################
+#    Create databases on RDS instance    #
+##########################################
 provider "postgresql" {
   host             = aws_db_instance.octopus_rds_instance.address
   alias            = "octopus"
@@ -62,7 +62,7 @@ provider "postgresql" {
 }
 
 resource "postgresql_database" "ums" {
-  count    = var.analytics ? 1 : 0
+  count    = var.ums ? 1 : 0
   provider = postgresql.octopus
   name     = "ums_db"
 }
@@ -74,19 +74,19 @@ resource "postgresql_database" "analytics" {
 }
 
 resource "postgresql_database" "comments" {
-  count    = var.analytics ? 1 : 0
+  count    = var.comments ? 1 : 0
   provider = postgresql.octopus
   name     = "octopus_comments_db"
 }
 
 resource "postgresql_database" "chat" {
-  count    = var.analytics ? 1 : 0
+  count    = var.chat ? 1 : 0
   provider = postgresql.octopus
   name     = "octopus_chat_db"
 }
 
 resource "postgresql_database" "ecommerce" {
-  count    = var.analytics ? 1 : 0
+  count    = var.ecommerce ? 1 : 0
   provider = postgresql.octopus
   name     = "octopus_ecommerce_db"
 }

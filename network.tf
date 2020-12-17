@@ -1,12 +1,15 @@
+#######################
+#       Provider      #
+#######################
 provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
   region     = var.region
 }
 
-#######
-# VPC #
-#######
+########################
+#         VPC          #
+########################
 resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc_cidr
   enable_dns_hostnames = true
@@ -19,9 +22,9 @@ resource "aws_vpc" "vpc" {
   }
 }
 
-####################
-# Internet Gateway #
-####################
+#########################
+#    Internet Gateway   #
+#########################
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
   tags = {
@@ -30,9 +33,9 @@ resource "aws_internet_gateway" "igw" {
     "user:Environment" = var.var_dev_environment
   }
 }
-###########
-# Subnets #
-###########
+##########################
+#         Subnet         #
+##########################
 resource "aws_subnet" "public_subnets" {
   count                   = local.public_count
   vpc_id                  = aws_vpc.vpc.id
@@ -47,9 +50,9 @@ resource "aws_subnet" "public_subnets" {
   }
 }
 
-#################
-# Routing Table #
-#################
+###########################
+#      Routing Table      #
+###########################
 resource "aws_route_table" "route_table" {
   vpc_id = aws_vpc.vpc.id
   route {
