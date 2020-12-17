@@ -1,6 +1,6 @@
-###################
-# Security Groups #
-###################
+#########################
+#    Security Groups    #
+#########################
 resource "aws_security_group" "main_sg" {
   name        = "${var.var_name}-main-sg"
   vpc_id      = aws_vpc.vpc.id

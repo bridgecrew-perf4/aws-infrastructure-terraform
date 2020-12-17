@@ -55,8 +55,8 @@ provider "postgresql" {
   host             = aws_db_instance.octopus_rds_instance.address
   alias            = "octopus"
   database         = "postgres"
-  username         = var.username_db
-  password         = var.password_db
+  username         = aws_db_instance.octopus_rds_instance.username
+  password         = aws_db_instance.octopus_rds_instance.password
   sslmode          = "disable"
   expected_version = aws_db_instance.octopus_rds_instance.engine_version
 }
