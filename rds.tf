@@ -12,9 +12,9 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
 }
 
 ##########################################
-# Create RDS instance for octopus server #
+# Create RDS instance for devops-service server #
 ##########################################
-resource "aws_db_instance" "octopus_rds_instance" {
+resource "aws_db_instance" "devops_servicerds_instance" {
   allocated_storage          = 20
   storage_type               = "gp2"
   engine                     = "postgres"
@@ -23,7 +23,7 @@ resource "aws_db_instance" "octopus_rds_instance" {
   parameter_group_name       = "default.postgres9.6"
   instance_class             = var.db_type
   identifier                 = "${var.var_name}-${var.var_dev_environment}-all-db"
-  name                       = "octopus_server_db"
+  name                       = "devops_serviceserver_db"
   username                   = var.username_db
   password                   = var.password_db
   multi_az                   = "false"
@@ -52,41 +52,41 @@ resource "aws_db_instance" "octopus_rds_instance" {
 #    Create databases on RDS instance    #
 ##########################################
 provider "postgresql" {
-  host             = aws_db_instance.octopus_rds_instance.address
-  alias            = "octopus"
+  host             = aws_db_instance.devops_servicerds_instance.address
+  alias            = "devops-service"
   database         = "postgres"
-  username         = aws_db_instance.octopus_rds_instance.username
-  password         = aws_db_instance.octopus_rds_instance.password
+  username         = aws_db_instance.devops_servicerds_instance.username
+  password         = aws_db_instance.devops_servicerds_instance.password
   sslmode          = "disable"
-  expected_version = aws_db_instance.octopus_rds_instance.engine_version
+  expected_version = aws_db_instance.devops_servicerds_instance.engine_version
 }
 
 resource "postgresql_database" "ums" {
   count    = var.ums ? 1 : 0
-  provider = postgresql.octopus
+  provider = postgresql.devops-service
   name     = "ums_db"
 }
 
 resource "postgresql_database" "analytics" {
   count    = var.analytics ? 1 : 0
-  provider = postgresql.octopus
-  name     = "octopus_analytics_db"
+  provider = postgresql.devops-service
+  name     = "devops_serviceanalytics_db"
 }
 
 resource "postgresql_database" "comments" {
   count    = var.comments ? 1 : 0
-  provider = postgresql.octopus
-  name     = "octopus_comments_db"
+  provider = postgresql.devops-service
+  name     = "devops_servicecomments_db"
 }
 
 resource "postgresql_database" "chat" {
   count    = var.chat ? 1 : 0
-  provider = postgresql.octopus
-  name     = "octopus_chat_db"
+  provider = postgresql.devops-service
+  name     = "devops_servicechat_db"
 }
 
 resource "postgresql_database" "ecommerce" {
   count    = var.ecommerce ? 1 : 0
-  provider = postgresql.octopus
-  name     = "octopus_ecommerce_db"
+  provider = postgresql.devops-service
+  name     = "devops_serviceecommerce_db"
 }

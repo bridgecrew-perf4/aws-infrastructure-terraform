@@ -65,7 +65,7 @@ variable "i_tags" {
   default = ["all", "transcoder"]
 }
 
-variable "i_type_octopus" {
+variable "i_type_devops-service" {
   default = "t2.micro"
 }
 
@@ -78,27 +78,27 @@ variable "i_type_transcoder" {
 ####################
 variable "ansible_playbook" {
   type    = list(string)
-  default = ["./ansible/octopus_setup_all.yml", "./ansible/octopus_setup_transcoder.yml"]
+  default = ["./ansible/devops-service_setup_all.yml", "./ansible/devops-service_setup_transcoder.yml"]
 }
 
 variable "analytics" {
   default     = "true"
-  description = "If set to true, install octopus-analytics service"
+  description = "If set to true, install devops-service-analytics service"
 }
 
 variable "chat" {
   default     = "true"
-  description = "If set to true, install octopus-chat service"
+  description = "If set to true, install devops-service-chat service"
 }
 
 variable "comments" {
   default     = "true"
-  description = "If set to true, install octopus-comments service"
+  description = "If set to true, install devops-service-comments service"
 }
 
 variable "ecommerce" {
   default     = "true"
-  description = "If set to true, install octopus-ecommerce service"
+  description = "If set to true, install devops-service-ecommerce service"
 }
 
 variable "ums" {
@@ -126,7 +126,7 @@ variable "db_type" {
 
 variable "username_db" {
   type    = string
-  default = "octopusinfluencer"
+  default = "devops-serviceinfluencer"
 }
 
 variable "password_db" {
@@ -139,6 +139,6 @@ variable "password_db" {
 ####################
 variable "s3bucket_name" {
   type        = list(string)
-  default     = ["octopus-server", "private-octopus-server-s3", "chat-server-user-attachments", "chat-server-canned-attachments", "ecommerce-s3", "private-ecommerce-s3"]
+  default     = ["devops-service-server", "private-devops-service-server-s3", "chat-server-user-attachments", "chat-server-canned-attachments", "ecommerce-s3", "private-ecommerce-s3"]
   description = "List of S3 Buckets to create"
 }

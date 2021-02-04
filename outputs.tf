@@ -7,5 +7,5 @@ output "private_ip_transcoder" {
 }
 
 output "psql_address" {
-  value = aws_db_instance.octopus_rds_instance.address
+  value = aws_db_instance.devops-service_rds_instance.address
 }

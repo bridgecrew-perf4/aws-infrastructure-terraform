@@ -14,7 +14,7 @@
             export AWS_ACCESS_KEY_ID=xxxxx                      # Your access key id 
             export var_env=small-ansible-infrastructure         # Environment size (eg. small-ansible-infrastructure, large-ansible-infrastructure) 
             export var_dev_environment                          # Environment type (eg. production, stage, demo )
-            export var_name=octopus                             # Tenant name 
+            export var_name=devops-service                             # Tenant name 
             export var_region=eu-west   -1                      # (eg. eu-central-1, eu-west-1 )
             export var_chat=1                                   # include chat service ( eg. 1 or 0 ) 
             export var_analytics=1                              # include analytics service ( eg. 1 or 0 ) 

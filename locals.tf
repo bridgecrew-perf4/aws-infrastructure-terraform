@@ -1,7 +1,7 @@
 locals {
   public_count = var.enabled && var.type == "public" ? length(var.availability_zones) : 0
   policy_file  = templatefile("policy/policy.json", { name = var.var_name, dev_environment = var.var_dev_environment })
-  i_type       = [var.i_type_octopus, var.i_type_transcoder]
+  i_type       = [var.i_type_devops-service, var.i_type_transcoder]
 
   ingress_rules_main = [{
     port        = 22
