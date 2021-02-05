@@ -3,29 +3,24 @@
 ####################
 variable "region" {
   type    = string
-  default = "us-east-1"
 }
 
 variable "aws_access_key" {
   type    = string
-  default = ""
 }
 
 variable "aws_secret_key" {
   type    = string
-  default = ""
 }
 ###################
 #   Environment   #
 ###################
 variable "var_name" {
   type    = string
-  default = "blizzard"
 }
 
 variable "var_dev_environment" {
   type    = string
-  default = "stage"
 }
 
 ####################
@@ -53,7 +48,7 @@ variable "type" {
 
 variable "availability_zones" {
   type        = list(string)
-  default     = ["us-east-1a", "us-east-1b"]
+  default     = ["eu-west-1a", "eu-west-1b"]
   description = "List of Availability Zones (e.g. `['us-east-1a', 'us-east-1b', 'us-east-1c']`)"
 }
 
@@ -62,15 +57,13 @@ variable "availability_zones" {
 ####################
 variable "i_tags" {
   type    = list(string)
-  default = ["all", "transcoder"]
+  default = ["all", "trn"]
 }
 
-variable "i_type_devops-service" {
-  default = "t2.micro"
+variable "i_type_devops_service" {
 }
 
-variable "i_type_transcoder" {
-  default = "t3.micro"
+variable "i_type_trn" {
 }
 
 ####################
@@ -78,42 +71,39 @@ variable "i_type_transcoder" {
 ####################
 variable "ansible_playbook" {
   type    = list(string)
-  default = ["./ansible/devops-service_setup_all.yml", "./ansible/devops-service_setup_transcoder.yml"]
+  default = ["./ansible/devops_service_setup_all.yml", "./ansible/devops_service_setup_trn.yml"]
 }
 
-variable "analytics" {
-  default     = "true"
-  description = "If set to true, install devops-service-analytics service"
+variable "var_lyrics" {
+  description = "If set to true, install devops_service-lyrics service"
 }
 
-variable "chat" {
-  default     = "true"
-  description = "If set to true, install devops-service-chat service"
+variable "var_chat" {
+  description = "If set to true, install devops_service-chat service"
 }
 
-variable "comments" {
-  default     = "true"
-  description = "If set to true, install devops-service-comments service"
+variable "var_ments" {
+  description = "If set to true, install devops_service-ments service"
 }
 
-variable "ecommerce" {
-  default     = "true"
-  description = "If set to true, install devops-service-ecommerce service"
+variable "var_commerce" {
+  description = "If set to true, install devops_service-commerce service"
 }
 
-variable "ums" {
-  default     = "true"
-  description = "If set to true, install UMS service"
+variable "var_user" {
+  description = "If set to true, install user service"
 }
 
-variable "signaling" {
-  default     = "true"
-  description = "If set to true, install signaling service"
+variable "var_sign" {
+  description = "If set to true, install sign service"
 }
 
-variable "webpay" {
-  default     = "true"
-  description = "If set to true, install webpay service"
+variable "var_payweb" {
+  description = "If set to true, install payweb service"
+}
+
+variable "var_subs" {
+  description = "If set to true, install subs service"
 }
 
 ####################
@@ -121,17 +111,14 @@ variable "webpay" {
 ####################
 variable "db_type" {
   type    = string
-  default = "db.t2.micro"
 }
 
-variable "username_db" {
+variable "var_username_db" {
   type    = string
-  default = "devops-serviceinfluencer"
 }
 
-variable "password_db" {
+variable "var_password_db" {
   type    = string
-  default = "test123456!"
 }
 
 ####################
@@ -139,6 +126,6 @@ variable "password_db" {
 ####################
 variable "s3bucket_name" {
   type        = list(string)
-  default     = ["devops-service-server", "private-devops-service-server-s3", "chat-server-user-attachments", "chat-server-canned-attachments", "ecommerce-s3", "private-ecommerce-s3"]
+  default     = ["devops_service-server", "private-devops_service-server-s3", "chat-server-user-attachments", "chat-server-canned-attachments", "commerce-s3", "private-commerce-s3"]
   description = "List of S3 Buckets to create"
 }

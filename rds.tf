@@ -12,9 +12,9 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
 }
 
 ##########################################
-# Create RDS instance for devops-service server #
+# Create RDS instance for devops_service server #
 ##########################################
-resource "aws_db_instance" "devops_servicerds_instance" {
+resource "aws_db_instance" "devops_service_rds_instance" {
   allocated_storage          = 20
   storage_type               = "gp2"
   engine                     = "postgres"
@@ -23,9 +23,9 @@ resource "aws_db_instance" "devops_servicerds_instance" {
   parameter_group_name       = "default.postgres9.6"
   instance_class             = var.db_type
   identifier                 = "${var.var_name}-${var.var_dev_environment}-all-db"
-  name                       = "devops_serviceserver_db"
-  username                   = var.username_db
-  password                   = var.password_db
+  name                       = "devops_service_server_db"
+  username                   = var.var_username_db
+  password                   = var.var_password_db
   multi_az                   = "false"
   backup_retention_period    = 7
   backup_window              = "04:00-04:30"
@@ -52,41 +52,41 @@ resource "aws_db_instance" "devops_servicerds_instance" {
 #    Create databases on RDS instance    #
 ##########################################
 provider "postgresql" {
-  host             = aws_db_instance.devops_servicerds_instance.address
-  alias            = "devops-service"
+  host             = aws_db_instance.devops_service_rds_instance.address
+  alias            = "devops_service"
   database         = "postgres"
-  username         = aws_db_instance.devops_servicerds_instance.username
-  password         = aws_db_instance.devops_servicerds_instance.password
+  username         = aws_db_instance.devops_service_rds_instance.username
+  password         = aws_db_instance.devops_service_rds_instance.password
   sslmode          = "disable"
-  expected_version = aws_db_instance.devops_servicerds_instance.engine_version
+  expected_version = aws_db_instance.devops_service_rds_instance.engine_version
 }
 
-resource "postgresql_database" "ums" {
-  count    = var.ums ? 1 : 0
-  provider = postgresql.devops-service
-  name     = "ums_db"
+resource "postgresql_database" "user" {
+  count    = var.var_user ? 1 : 0
+  provider = postgresql.devops_service
+  name     = "user_db"
 }
 
-resource "postgresql_database" "analytics" {
-  count    = var.analytics ? 1 : 0
-  provider = postgresql.devops-service
-  name     = "devops_serviceanalytics_db"
+resource "postgresql_database" "lyrics" {
+  count    = var.var_lyrics ? 1 : 0
+  provider = postgresql.devops_service
+  name     = "devops_service_lyrics_db"
 }
 
-resource "postgresql_database" "comments" {
-  count    = var.comments ? 1 : 0
-  provider = postgresql.devops-service
-  name     = "devops_servicecomments_db"
+resource "postgresql_database" "ments" {
+  count    = var.var_ments ? 1 : 0
+  provider = postgresql.devops_service
+  name     = "devops_service_ments_db"
 }
 
 resource "postgresql_database" "chat" {
-  count    = var.chat ? 1 : 0
-  provider = postgresql.devops-service
-  name     = "devops_servicechat_db"
+  count    = var.var_chat ? 1 : 0
+  provider = postgresql.devops_service
+  name     = "devops_service_chat_db"
 }
 
-resource "postgresql_database" "ecommerce" {
-  count    = var.ecommerce ? 1 : 0
-  provider = postgresql.devops-service
-  name     = "devops_serviceecommerce_db"
+resource "postgresql_database" "commerce" {
+  count    = var.var_commerce ? 1 : 0
+  provider = postgresql.devops_service
+  name     = "devops_service_commerce_db"
 }

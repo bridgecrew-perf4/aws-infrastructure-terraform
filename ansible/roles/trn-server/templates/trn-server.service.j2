@@ -11,8 +11,8 @@
 
 # Variables
 ZERO=0
-TRANSSERVER=/devops/services/{{ service }}/trn-server
-TRANSCODERDIR=/devops/services/{{ service }}
+TRNSERVER=/devops/services/{{ service }}/trn-server
+TRNDIR=/devops/services/{{ service }}
 
 # Source function library.
 . /lib/lsb/init-functions
@@ -20,19 +20,19 @@ TRANSCODERDIR=/devops/services/{{ service }}
 # Start the trn-server
 start() {
 ulimit -n 32768
-cd $TRANSCODERDIR
+cd $TRNDIR
 echo "Starting trn-server..."
-pgrep -f $TRANSSERVER > /dev/null
+pgrep -f $TRNSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
         echo "The service is already running"
     else
-        $TRANSSERVER >> $TRANSCODERDIR/logfile 2>&1 &
+        $TRNSERVER >> $TRNDIR/logfile 2>&1 &
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $TRANSSERVER > /dev/null
+        pgrep -f $TRNSERVER > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -46,18 +46,18 @@ echo
 
 # Stop the trn-server
 stop() {
-cd $TRANSCODERDIR
+cd $TRNDIR
 echo "Stopping trn-server..."
     #Verify if the service is running
-    pgrep -f $TRANSSERVER > /dev/null
+    pgrep -f $TRNSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
-        kill $(pgrep -f $TRANSSERVER)
+        kill $(pgrep -f $TRNSERVER)
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $TRANSSERVER  > /dev/null
+        pgrep -f $TRNSERVER  > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -75,7 +75,7 @@ echo
 status() {
     echo "Checking status of trn-server..."
     #Verify if the service is running
-    pgrep -f $TRANSSERVER > /dev/null
+    pgrep -f $TRNSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then

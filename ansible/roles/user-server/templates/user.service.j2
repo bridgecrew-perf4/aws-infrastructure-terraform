@@ -11,8 +11,8 @@
 
 # Variables
 ZERO=0
-UMS=/devops/services/{{ service }}/user
-UMSDIR=/devops/services/{{ service }}
+USER=/devops/services/{{ service }}/user
+USERDIR=/devops/services/{{ service }}
 
 # Source function library.
 . /lib/lsb/init-functions
@@ -20,19 +20,19 @@ UMSDIR=/devops/services/{{ service }}
 # Start the user server
 start() {
 ulimit -n 32768
-cd $UMSDIR
+cd $USERDIR
 echo "Starting user server..."
-pgrep -f $UMS > /dev/null
+pgrep -f $USER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
         echo "The service is already running"
     else
-        $UMS >> $UMSDIR/logfile 2>&1 &
+        $USER >> $USERDIR/logfile 2>&1 &
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $UMS > /dev/null
+        pgrep -f $USER > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -46,18 +46,18 @@ echo
 
 # Stop the user server
 stop() {
-cd $UMSDIR
+cd $USERDIR
 echo "Stopping user server..."
     #Verify if the service is running
-    pgrep -f $UMS > /dev/null
+    pgrep -f $USER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
-        kill $(pgrep -f $UMS)
+        kill $(pgrep -f $USER)
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $UMS  > /dev/null
+        pgrep -f $USER  > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -75,7 +75,7 @@ echo
 status() {
     echo "Checking status of user server..."
     #Verify if the service is running
-    pgrep -f $UMS > /dev/null
+    pgrep -f $USER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then

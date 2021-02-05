@@ -11,8 +11,8 @@
 
 # Variables
 ZERO=0
-OCTOPUSSERVER=/devops/services/{{ service }}/LyricsServer
-OCTOPUSDIR=/devops/services/{{ service }}
+LYRICSSERVER=/devops/services/{{ service }}/LyricsServer
+LYRICSDIR=/devops/services/{{ service }}
 
 # Source function library.
 . /lib/lsb/init-functions
@@ -20,19 +20,19 @@ OCTOPUSDIR=/devops/services/{{ service }}
 # Start the devops-service server
 start() {
 ulimit -n 32768
-cd $OCTOPUSDIR
+cd $LYRICSDIR
 echo "Starting devops-service server..."
-pgrep -f $OCTOPUSSERVER > /dev/null
+pgrep -f $LYRICSSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
         echo "The service is already running"
     else
-        $OCTOPUSSERVER >> $OCTOPUSDIR/logfile 2>&1 &
+        $LYRICSSERVER >> $LYRICSDIR/logfile 2>&1 &
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $OCTOPUSSERVER > /dev/null
+        pgrep -f $LYRICSSERVER > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -46,18 +46,18 @@ echo
 
 # Stop the devops-service server
 stop() {
-cd $OCTOPUSDIR
+cd $LYRICSDIR
 echo "Stopping devops-service server..."
     #Verify if the service is running
-    pgrep -f $OCTOPUSSERVER > /dev/null
+    pgrep -f $LYRICSSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
-        kill $(pgrep -f $OCTOPUSSERVER)
+        kill $(pgrep -f $LYRICSSERVER)
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $OCTOPUSSERVER  > /dev/null
+        pgrep -f $LYRICSSERVER  > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -75,7 +75,7 @@ echo
 status() {
     echo "Checking status of devops-service server..."
     #Verify if the service is running
-    pgrep -f $OCTOPUSSERVER > /dev/null
+    pgrep -f $LYRICSSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then

@@ -11,25 +11,25 @@
 
 # Variables
 ZERO=0
-WEBPAY=/devops/services/{{ service }}/payweb
-WEBPAY_DIR=/devops/services/{{ service }}
+PAYWEB=/devops/services/{{ service }}/payweb
+PAYWEB_DIR=/devops/services/{{ service }}
 
 # Start the payweb server
 start() {
 ulimit -n 32768
-cd $WEBPAY_DIR
+cd $PAYWEB_DIR
 echo "Starting payweb server..."
-pgrep -f $WEBPAY > /dev/null
+pgrep -f $PAYWEB > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
         echo "The service is already running"
     else
-        $WEBPAY >> $WEBPAY_DIR/logfile 2>&1 &
+        $PAYWEB >> $PAYWEB_DIR/logfile 2>&1 &
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $WEBPAY > /dev/null
+        pgrep -f $PAYWEB > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -43,18 +43,18 @@ echo
 
 # Stop the payweb server
 stop() {
-cd $WEBPAY_DIR
+cd $PAYWEB_DIR
 echo "Stopping payweb server..."
     #Verify if the service is running
-    pgrep -f $WEBPAY > /dev/null
+    pgrep -f $PAYWEB > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
-        kill $(pgrep -f $WEBPAY)
+        kill $(pgrep -f $PAYWEB)
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $WEBPAY  > /dev/null
+        pgrep -f $PAYWEB  > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -72,7 +72,7 @@ echo
 status() {
     echo "Checking status of payweb server..."
     #Verify if the service is running
-    pgrep -f $WEBPAY > /dev/null
+    pgrep -f $PAYWEB > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then

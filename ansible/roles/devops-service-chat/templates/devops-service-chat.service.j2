@@ -11,8 +11,8 @@
 
 # Variables
 ZERO=0
-OCTOPUSCHATSERVER=/devops/services/{{ service }}/devops-service-chat-server
-OCTOPUSCHATDIR=/devops/services/{{ service }}
+CHATSERVER=/devops/services/{{ service }}/devops-service-chat-server
+CHATDIR=/devops/services/{{ service }}
 
 # Source function library.
 . /lib/lsb/init-functions
@@ -20,19 +20,19 @@ OCTOPUSCHATDIR=/devops/services/{{ service }}
 # Start the devops-service chat server
 start() {
 ulimit -n 32768
-cd $OCTOPUSCHATDIR
+cd $CHATDIR
 echo "Starting devops-service chat server..."
-pgrep -f $OCTOPUSCHATSERVER > /dev/null
+pgrep -f $CHATSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
         echo "The service is already running"
     else
-        $OCTOPUSCHATSERVER >> $OCTOPUSCHATDIR/logfile 2>&1 &
+        $CHATSERVER >> $CHATDIR/logfile 2>&1 &
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $OCTOPUSCHATSERVER > /dev/null
+        pgrep -f $CHATSERVER > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -46,18 +46,18 @@ echo
 
 # Stop the devops-service chat server
 stop() {
-cd $OCTOPUSCHATDIR
+cd $CHATDIR
 echo "Stopping devops-service chat server..."
     #Verify if the service is running
-    pgrep -f $OCTOPUSCHATSERVER > /dev/null
+    pgrep -f $CHATSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
-        kill $(pgrep -f $OCTOPUSCHATSERVER)
+        kill $(pgrep -f $CHATSERVER)
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $OCTOPUSCHATSERVER  > /dev/null
+        pgrep -f $CHATSERVER  > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -75,7 +75,7 @@ echo
 status() {
     echo "Checking status of devops-service chat server..."
     #Verify if the service is running
-    pgrep -f $OCTOPUSCHATSERVER > /dev/null
+    pgrep -f $CHATSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then

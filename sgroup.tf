@@ -11,6 +11,13 @@ resource "aws_security_group" "main_sg" {
     to_port     = 0
     protocol    = "-1"
   }
+  
+  ingress {
+    cidr_blocks = ["200.1.0.0/16"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+  }
 
   dynamic "ingress" {
     for_each = local.ingress_rules_main

@@ -11,8 +11,8 @@
 
 # Variables
 ZERO=0
-OCTOPUSH=/devops/services/{{ service }}/Push
-OCTOPUSHDIR=/devops/services/{{ service }}
+PUSHSERVICE=/devops/services/{{ service }}/Push
+PUSHDIR=/devops/services/{{ service }}
 
 # Source function library.
 . /lib/lsb/init-functions
@@ -20,19 +20,19 @@ OCTOPUSHDIR=/devops/services/{{ service }}
 # Start the devops-service server
 start() {
 ulimit -n 32768
-cd $OCTOPUSHDIR
+cd $PUSHDIR
 echo "Starting devops-serviceh..."
-pgrep -f $OCTOPUSH > /dev/null
+pgrep -f $PUSHSERVICE > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
         echo "The service is already running"
     else
-        $OCTOPUSH >> $OCTOPUSHDIR/logfile 2>&1 &
+        $PUSHSERVICE >> $PUSHDIR/logfile 2>&1 &
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $OCTOPUSH > /dev/null
+        pgrep -f $PUSHSERVICE > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -46,18 +46,18 @@ echo
 
 # Stop the devops-serviceh
 stop() {
-cd $OCTOPUSHDIR
+cd $PUSHDIR
 echo "Stopping devops-service server..."
     #Verify if the service is running
-    pgrep -f $OCTOPUSH > /dev/null
+    pgrep -f $PUSHSERVICE > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
-        kill $(pgrep -f $OCTOPUSH)
+        kill $(pgrep -f $PUSHSERVICE)
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $OCTOPUSH  > /dev/null
+        pgrep -f $PUSHSERVICE  > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -75,7 +75,7 @@ echo
 status() {
     echo "Checking status of devops-service server..."
     #Verify if the service is running
-    pgrep -f $OCTOPUSH > /dev/null
+    pgrep -f $PUSHSERVICE > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then

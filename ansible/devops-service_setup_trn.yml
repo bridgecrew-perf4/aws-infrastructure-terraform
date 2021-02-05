@@ -1,4 +1,4 @@
-- name: Setup Transcoder Server Environment
+- name: Setup Trn Server Environment
   hosts: all
   become: yes
   become_method: sudo
@@ -6,8 +6,8 @@
   remote_user: ec2-user
   gather_facts: yes
   vars:
-    #dev_environment: "{{ lookup('env','var_dev_environment') }}"
-    #var_name: "{{ lookup('env','var_name') }}"
+    #dev_environment: "{{ lookup('env','TF_VAR_var_dev_environment') }}"
+    #var_name: "{{ lookup('env','TF_VAR_var_name') }}"
     var_name: blizzard
     dev_environment: stage
   roles:

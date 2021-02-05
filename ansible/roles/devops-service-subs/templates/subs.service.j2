@@ -11,8 +11,8 @@
 
 # Variables
 ZERO=0
-SUBSCRIPTIONSERVER=/devops/services/{{ service }}/SubscriptionServer
-SUBSCRIPTIONDIR=/devops/services/{{ service }}
+SUBSSERVER=/devops/services/{{ service }}/SUBSSERVER
+SUBSDIR=/devops/services/{{ service }}
 
 # Source function library.
 . /lib/lsb/init-functions
@@ -20,19 +20,19 @@ SUBSCRIPTIONDIR=/devops/services/{{ service }}
 # Start the subs server
 start() {
 ulimit -n 32768
-cd $SUBSCRIPTIONDIR
+cd $SUBSDIR
 echo "Starting subs server..."
-pgrep -f $SUBSCRIPTIONSERVER > /dev/null
+pgrep -f $SUBSSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
         echo "The service is already running"
     else
-        $SUBSCRIPTIONSERVER >> $SUBSCRIPTIONDIR/logfile 2>&1 &
+        $SUBSSERVER >> $SUBSDIR/logfile 2>&1 &
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $SUBSCRIPTIONSERVER > /dev/null
+        pgrep -f $SUBSSERVER > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -46,18 +46,18 @@ echo
 
 # Stop the subs server
 stop() {
-cd $SUBSCRIPTIONDIR
+cd $SUBSDIR
 echo "Stopping subs server..."
     #Verify if the service is running
-    pgrep -f $SUBSCRIPTIONSERVER > /dev/null
+    pgrep -f $SUBSSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then
-        kill $(pgrep -f $SUBSCRIPTIONSERVER)
+        kill $(pgrep -f $SUBSSERVER)
         sleep 5
 
         #Verify if the service is running
-        pgrep -f $SUBSCRIPTIONSERVER  > /dev/null
+        pgrep -f $SUBSSERVER  > /dev/null
         VERIFIER=$?
         if [ $ZERO = $VERIFIER ]
         then
@@ -75,7 +75,7 @@ echo
 status() {
     echo "Checking status of subs server..."
     #Verify if the service is running
-    pgrep -f $SUBSCRIPTIONSERVER > /dev/null
+    pgrep -f $SUBSSERVER > /dev/null
     VERIFIER=$?
     if [ $ZERO = $VERIFIER ]
     then

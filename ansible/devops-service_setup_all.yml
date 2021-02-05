@@ -6,22 +6,22 @@
   remote_user: ec2-user
   gather_facts: yes
   vars:
-    #dev_environment: "{{ lookup('env','var_dev_environment') }}"
-    #var_name: "{{ lookup('env','var_name') }}"
+    #dev_environment: "{{ lookup('env','TF_VAR_var_dev_environment') }}"
+    #var_name: "{{ lookup('env','TF_VAR_var_name') }}"
     var_name: blizzard
     dev_environment: stage
-    chat: "{{ lookup('env','var_chat') }}"
-    signaling: "{{ lookup('env','var_sign') }}"
-    analytics: "{{ lookup('env','var_lyrics') }}"
-    ecommerce: "{{ lookup('env','var_commerce') }}"
-    comments: "{{ lookup('env','var_ments') }}"
-    webpay: "{{ lookup('env','var_payweb') }}"
-    ums: "{{ lookup('env','var_user') }}"
+    chat: "{{ lookup('env','TF_VAR_var_chat') }}"
+    sign: "{{ lookup('env','TF_VAR_var_sign') }}"
+    lyrics: "{{ lookup('env','TF_VAR_var_lyrics') }}"
+    commerce: "{{ lookup('env','TF_VAR_var_commerce') }}"
+    ments: "{{ lookup('env','TF_VAR_var_ments') }}"
+    payweb: "{{ lookup('env','TF_VAR_var_payweb') }}"
+    user: "{{ lookup('env','TF_VAR_var_user') }}"
   roles:
     - common
     - devops-service-server
     - devops-service-push
-    - webapp
+    - appweb
     - { role: devops-service-chat, when: chat == '1' }
     - { role: devops-service-ments, when: ments == '1' }
     - { role: devops-service-lyrics, when: lyrics == '1' }

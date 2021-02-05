@@ -14,7 +14,7 @@ data "aws_ami" "amazon_linux" {
 #     Create AWS keypair     #
 ##############################
 resource "aws_key_pair" "pem" {
-  key_name   = "devops1"
+  key_name   = "devops"
   public_key = "ssh-rsa SomeXXXKey"
 }
 
@@ -56,11 +56,11 @@ resource "aws_instance" "ec2" {
     type        = "ssh"
     user        = "ec2-user"
     host        = self.public_ip
-    private_key = file("./key/devops1.pem")
+    private_key = file("./key/devops.pem")
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook --ssh-common-args='-o StrictHostKeyChecking=no' -u ec2-user -i '${self.public_ip},' --private-key ./key/devops1.pem ${var.ansible_playbook[count.index]}"
+    command = "ansible-playbook --ssh-common-args='-o StrictHostKeyChecking=no' -u ec2-user -i '${self.public_ip},' --private-key ./key/devops.pem ${var.ansible_playbook[count.index]}"
   }
 
 }
