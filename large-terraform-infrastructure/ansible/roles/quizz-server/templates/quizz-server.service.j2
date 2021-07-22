@@ -1,0 +1,109 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          quizz server
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: quizz server daemon
+# Description:       Init script for the quizz server daemon
+### END INIT INFO
+
+# Variables
+ZERO=0
+QUIZZSERVER=/devops/services/{{ service }}/QuizzServer
+QUIZZDIR=/devops/services/{{ service }}
+
+# Source function library.
+. /lib/lsb/init-functions
+
+# Start the quizz server
+start() {
+ulimit -n 32768
+cd $QUIZZDIR
+echo "Starting quizz server..."
+pgrep -f $QUIZZSERVER > /dev/null
+    VERIFIER=$?
+    if [ $ZERO = $VERIFIER ]
+    then
+        echo "The service is already running"
+    else
+        $QUIZZSERVER >> $QUIZZDIR/logfile 2>&1 &
+        sleep 5
+
+        #Verify if the service is running
+        pgrep -f $QUIZZSERVER > /dev/null
+        VERIFIER=$?
+        if [ $ZERO = $VERIFIER ]
+        then
+            echo "Service was successfully started"
+        else
+            echo "Failed to start service"
+        fi
+    fi
+echo
+}
+
+# Stop the quizz server
+stop() {
+cd $QUIZZDIR
+echo "Stopping quizz server..."
+    #Verify if the service is running
+    pgrep -f $QUIZZSERVER > /dev/null
+    VERIFIER=$?
+    if [ $ZERO = $VERIFIER ]
+    then
+        kill $(pgrep -f $QUIZZSERVER)
+        sleep 5
+
+        #Verify if the service is running
+        pgrep -f $QUIZZSERVER  > /dev/null
+        VERIFIER=$?
+        if [ $ZERO = $VERIFIER ]
+        then
+            echo "Failed to stop service"
+        else
+            echo "Service was successfully stopped"
+        fi
+    else
+        echo "The service is already stopped"
+    fi
+echo
+}
+
+# Verify the status of quizz server
+status() {
+    echo "Checking status of quizz server..."
+    #Verify if the service is running
+    pgrep -f $QUIZZSERVER > /dev/null
+    VERIFIER=$?
+    if [ $ZERO = $VERIFIER ]
+    then
+        echo "Service is running"
+    else
+        echo "Service is stopped"
+    fi
+    echo
+}
+
+# Main logic
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status
+        ;;
+    restart|reload)
+        stop
+        start
+        ;;
+    *)
+    echo $"Usage: $0 {start|stop|status|restart|reload}"
+    exit 1
+esac
+
+exit 0

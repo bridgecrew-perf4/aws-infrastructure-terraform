@@ -1,0 +1,14 @@
+- name: Setup Webapp Server Environment
+  hosts: all
+  become: yes
+  become_method: sudo
+  become_user: root
+  remote_user: ec2-user
+  gather_facts: yes
+  vars:
+    dev_environment: "test"
+    var_name: "devops"
+  roles:
+    - common
+    - nginx
+    - webapp
